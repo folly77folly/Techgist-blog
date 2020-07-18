@@ -12,7 +12,8 @@ class Blog extends Model
     protected $dates =['deleted_at'];
     protected $fillable = [
         'title',
-        'body'
+        'body',
+        'featured_image',
     ];
 
     public function category()

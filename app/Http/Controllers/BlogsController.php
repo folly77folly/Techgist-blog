@@ -23,6 +23,12 @@ class BlogsController extends Controller
 
     public function store(Request $request){
         $input = $request->all();
+        //image upload
+        if ($file = $request->file('featured_image')) {
+            $name = uniqid() . ($file->getClientOriginalName());
+            $file->move('images/featured_images/', $name);
+            $input['featured_image'] = $name;
+        }
         $blog = Blog::create($input);
         // $newBlog = new Blog();
         // $newBlog->title = $request->title;

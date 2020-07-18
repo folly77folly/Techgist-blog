@@ -2,6 +2,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="jumbotron">
+            <div class="col-md-12">
+                @if ($blog->featured_image)
+                <img src="/images/featured_images/{{$blog->featured_image? $blog->featured_image: '' }}" 
+                alt="{{ Str::limit($blog->title, 10, '...') }}" class="img-responsive featured_image">
+                @endif
+            </div>
         <div class="col-md-12">
             <h1>{{ $blog->title }}</h1>
         </div>
