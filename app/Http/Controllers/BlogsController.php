@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use App\Blog;
+use App\Category;
+
+
+class BlogsController extends Controller
+{
+    //
+    public function index(){
+        $blogs = Blog::latest()->get();
+        return view('blogs.index', compact('blogs'));
+    }
+
+    public function create(){
+        $categories = Category::latest()->get();
+        return view('blogs.create', compact('categories'));
+    }
+
+    public function store(Request $request){
+        $input = $request->all();
+        $blog = Blog::create($input);
+        // $newBlog = new Blog();
+        // $newBlog->title = $request->title;
+        // $newBlog->body = $request->body;
+        // $newBlog->save();
+        //sync with categories
+        if ($request->category_id) {
+            $blog->category()->sync($request->category_id);
+        }
+        return redirect('/blogs');
+    }
+
+    public function show($id){
+        $blog = Blog::findOrFail($id);
+        return view('/blogs.show', compact('blog'));
+    }
+
+    public function edit($id){
+        $blog = Blog::findOrFail($id);
+        $categories = Category::all();
+        $bc = array();
+        foreach ($blog->category as  $c) {
+            $bc[] = ($c->id-1);
+        }
+        $filtered = Arr::except($categories, $bc);
+        return view('/blogs.edit', ['blog'=>$blog, 'categories'=> $categories, 'filtered'=>$filtered]);
+    }
+
+    public function update(Request $request, $id){
+        $input = $request->all();
+        $blog = Blog::findOrFail($id);
+        $blog->update($input);
+        //sync with categories
+        if ($request->category_id) {
+            $blog->category()->sync($request->category_id);
+        }
+        return redirect('/blogs');
+
+    }
+
+    public function delete($id){
+        $blog = Blog::findOrFail($id);
+        $blog->delete();
+        return redirect('blogs');
+
+    }
+    public function trash(){
+        $trashedBlogs = Blog::onlyTrashed()->get();
+        return view('blogs.trash', compact('trashedBlogs'));
+
+    }
+    public function restore($id){
+        $restoreBlog = Blog::onlyTrashed()->findOrFail($id);
+        $restoreBlog->restore($restoreBlog);
+        return redirect('blogs');
+
+    }
+    public function permanentDelete($id){
+        $toBeDeletedBlog = Blog::onlyTrashed()->findOrFail($id);
+        $toBeDeletedBlog->forceDelete($toBeDeletedBlog);
+        return redirect('blogs');
+
+    }
+}
