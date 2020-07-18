@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use App\Blog;
 use App\Category;
 
@@ -29,6 +30,10 @@ class BlogsController extends Controller
             $file->move('images/featured_images/', $name);
             $input['featured_image'] = $name;
         }
+        //meta stuffs
+        $input['slug']= Str::slug($request['title']);
+        $input['meta_title']= Str::limit($request['title'], 50);
+        $input['meta_description']= Str::limit($request['title'], 100,'...');
         $blog = Blog::create($input);
         // $newBlog = new Blog();
         // $newBlog->title = $request->title;

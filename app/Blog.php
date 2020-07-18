@@ -14,6 +14,9 @@ class Blog extends Model
         'title',
         'body',
         'featured_image',
+        'slug',
+        'meta_title',
+        'meta_description',
     ];
 
     public function category()

@@ -1,4 +1,13 @@
 @extends('layouts.app')
+{{-- @if ($blog->title)
+@include('partials.meta_dynamic')
+@else
+@include('partials.meta_static')  
+@endif --}}
+@section('meta_title'){{$blog->meta_title}}
+@endsection
+@section('meta_description'){{$blog->meta_description}}
+@endsection
 @section('content')
     <div class="container-fluid">
         <div class="jumbotron">
