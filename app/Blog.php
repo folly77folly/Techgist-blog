@@ -17,11 +17,16 @@ class Blog extends Model
         'slug',
         'meta_title',
         'meta_description',
+        'status',
     ];
 
     public function category()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
 

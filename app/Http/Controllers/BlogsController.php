@@ -35,14 +35,19 @@ class BlogsController extends Controller
         $input['slug']= Str::slug($request['title']);
         $input['meta_title']= Str::limit($request['title'], 50);
         $input['meta_description']= Str::limit($request['title'], 100,'...');
-        $blog = Blog::create($input);
+        // Blog instance
+        // $blog = Blog::create($input);
+
+        //user instance
+        $blogByUser = $request->user()->blogs()->create($input);
+
         // $newBlog = new Blog();
         // $newBlog->title = $request->title;
         // $newBlog->body = $request->body;
         // $newBlog->save();
         //sync with categories
         if ($request->category_id) {
-            $blog->category()->sync($request->category_id);
+            $blogByUser->category()->sync($request->category_id);
         }
         return redirect('/blogs');
     }
@@ -64,6 +69,7 @@ class BlogsController extends Controller
     }
 
     public function update(Request $request, $id){
+
         $input = $request->all();
         $blog = Blog::findOrFail($id);
         $blog->update($input);
