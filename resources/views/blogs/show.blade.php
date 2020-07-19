@@ -4,11 +4,11 @@
 @else
 @include('partials.meta_static')  
 @endif --}}
-{{-- @include('partials.meta_dynamic') --}}
-@section('meta_title'){{$blog->meta_title}}
+@include('partials.meta_dynamic')
+{{-- @section('meta_title'){{$blog->meta_title}}
 @endsection
 @section('meta_description'){{$blog->meta_description}}
-@endsection
+@endsection --}}
 @section('content')
     <div class="container-fluid">
         <div class="jumbotron">

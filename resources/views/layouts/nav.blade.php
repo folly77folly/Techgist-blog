@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-            <li> <a href="{{route('blogs')}}" class="nav-link">Blogs <span class="badge bg-dark text-white">{{$blog->count()}}</span></a> </li>
+            <li> <a href="{{route('blogs')}}" class="nav-link">Blogs <span class="badge bg-dark text-white">{{$blogs->count()}}</span></a> </li>
             <li> <a href="{{route('admin.index')}}" class="nav-link">Admin</a> </li>
             <li> <a href="{{route('categories.index')}}" class="nav-link">Category</a> </li>
 
