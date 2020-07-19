@@ -6,7 +6,11 @@ use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
-{
+{   
+
+    public function __construct(){
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -72,6 +76,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::findOrFail($id)->update($request->only('role_id'));
+        return back();
     }
 
     /**
@@ -80,8 +86,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
+        $user->delete();
+        return back();
+
     }
 }
