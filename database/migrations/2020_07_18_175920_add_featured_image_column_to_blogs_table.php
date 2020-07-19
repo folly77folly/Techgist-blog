@@ -28,7 +28,8 @@ class AddFeaturedImageColumnToBlogsTable extends Migration
     {
         Schema::table('blogs', function (Blueprint $table) {
             //
-            $table->dropColumn('featured_image');
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            $table->dropIfExists('featured_image');
         });
     }
 }

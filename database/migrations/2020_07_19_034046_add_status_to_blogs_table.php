@@ -28,7 +28,8 @@ class AddStatusToBlogsTable extends Migration
     {
         Schema::table('blogs', function (Blueprint $table) {
             //
-            $table->dropColumn('status');
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            $table->dropIfExists('status');
         });
     }
 }

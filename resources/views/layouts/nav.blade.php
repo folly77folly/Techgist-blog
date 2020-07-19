@@ -10,14 +10,21 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-            <li> <a href="{{route('blogs')}}" class="nav-link">Blogs <span class="badge bg-dark text-white">{{$blogs->count()}}</span></a> </li>
-            <li> <a href="{{route('admin.index')}}" class="nav-link">Admin</a> </li>
+            <li> <a href="{{route('blogs')}}" class="nav-link">Blogs <span class="badge bg-dark text-white">{{$blogs->count()}}</span></a> </li>           
+
             <li> <a href="{{route('categories.index')}}" class="nav-link">Category</a> </li>
 
             </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
+                @if (Auth::user() && Auth::user()->role_id === 1)
+                <li> <a href="{{route('admin.index')}}" class="nav-link">Admin</a> </li>
+            @elseif(Auth::user() && Auth::user()->role_id === 2)
+                <li> <a href="{{route('admin.index')}}" class="nav-link">Author</a> </li>
+            @elseif(Auth::user() && Auth::user()->role_id === 3)
+                <li> <a href="" class="nav-link">Subscriber</a> </li>
+            @endif
                 <!-- Authentication Links -->
                 @guest
                     <li class="nav-item">
