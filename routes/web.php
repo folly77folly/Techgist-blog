@@ -36,11 +36,12 @@ Route::patch('/blogs/{id}/update', 'BlogsController@update')->name('blogs.update
 Route::delete('/blogs/{id}/delete', 'BlogsController@delete')->name('blogs.delete');
 
 //Admin Routes
-Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('/admin/blogs', 'AdminController@blogs')->name('admin.blogs');
 
 // roue resource
 Route::resource('categories', 'CategoryController');
+Route::resource('users', 'UserController');
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {

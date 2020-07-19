@@ -33,7 +33,8 @@ class AddUserIdColumnToBlogsTable extends Migration
     {
         Schema::table('blogs', function (Blueprint $table) {
             //
-            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            // DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            $table->dropForeign('user_id');
             $table->dropIfExists('user_id');
         });
     }

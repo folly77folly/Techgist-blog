@@ -18,12 +18,8 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
-                @if (Auth::user() && Auth::user()->role_id === 1)
-                <li> <a href="{{route('admin.index')}}" class="nav-link">Admin</a> </li>
-            @elseif(Auth::user() && Auth::user()->role_id === 2)
-                <li> <a href="{{route('admin.index')}}" class="nav-link">Author</a> </li>
-            @elseif(Auth::user() && Auth::user()->role_id === 3)
-                <li> <a href="" class="nav-link">Subscriber</a> </li>
+            @if (Auth::user())
+                <li> <a href="{{route('admin.dashboard')}}" class="nav-link">Dashboard</a> </li>
             @endif
                 <!-- Authentication Links -->
                 @guest

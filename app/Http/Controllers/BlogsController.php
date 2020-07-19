@@ -11,6 +11,11 @@ use App\Category;
 
 class BlogsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('author',['only'=>['create','store','edit','update']]);
+        $this->middleware('admin',['only'=>['delete','trash','restore','permanentDelete']]);
+    }
+    
     //
     public function index(){
         // $blogs = Blog::latest()->get();

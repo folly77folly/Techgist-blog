@@ -8,10 +8,11 @@ class AdminController extends Controller
 {
     //
     public function __construct(){
-        $this->middleware(['auth','admin']);
+        $this->middleware(['auth','admin'],['only'=>'blogs']);
+        $this->middleware(['auth']);
     }
     public function index(){
-        return view('admin.index');
+        return view('admin.dashboard');
     }
     public function blogs(){
         $publishedBlogs = Blog::where('status', 1)->latest()->get();
