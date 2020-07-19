@@ -1,9 +1,10 @@
 @extends('layouts.app')
 {{-- @if ($blog->title)
-@include('partials.meta_dynamic')
+
 @else
 @include('partials.meta_static')  
 @endif --}}
+{{-- @include('partials.meta_dynamic') --}}
 @section('meta_title'){{$blog->meta_title}}
 @endsection
 @section('meta_description'){{$blog->meta_description}}
@@ -32,7 +33,7 @@
         </div>
         </div>
         <div class="col-md-12">
-        <p>{{ $blog->body }}</p>
+        {!! $blog->body !!}
         <hr>
         <strong>Categories:</strong>
         @foreach($blog->category as $category)

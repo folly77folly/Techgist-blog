@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use App\Blog;
 use Illuminate\Support\ServiceProvider;
 
 class ComposerServiceProvider extends ServiceProvider
@@ -14,6 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function register()
     {
         //
+
     }
 
     /**
@@ -24,5 +25,8 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        view()->composer(['partials.meta_dynamic', 'layouts.nav'], function ($view) {
+            $view->with('blog', Blog::all());
+        });
     }
 }
