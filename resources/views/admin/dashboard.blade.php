@@ -15,6 +15,9 @@
         <button class="btn btn-primary margin-left">
         <a class ="text-white" href="{{route('blogs.create')}}">Create blog</a>
         </button>
+        <button class="btn btn-primary margin-left">
+            <a class ="text-white" href="{{route('admin.blogs')}}">Publish blog</a>
+            </button>
         <button class="btn btn-danger margin-left">
             <a class ="text-white" href="{{route('blogs.trash')}}">Trashed blog</a>
         </button>
