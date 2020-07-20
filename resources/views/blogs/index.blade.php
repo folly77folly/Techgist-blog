@@ -14,7 +14,8 @@
         <div class="col-md-12">
             @if ($blog->featured_image)
             <img src="/images/featured_images/{{$blog->featured_image? $blog->featured_image: '' }}" 
-            alt="{{ Str::limit($blog->title, 10, '...') }}" class="img-responsive featured_image">
+            alt="{{ Str::limit($blog->title, 10, '...') }}" class="img-responsive featured_image"
+            style="width:300px;height:auto"><br>
             @endif
         </div>
         <div class="lead">
