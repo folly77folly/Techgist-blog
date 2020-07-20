@@ -1,11 +1,12 @@
 @extends('layouts.app')
 @section('content')
+@include('partials.tinymce')
     <div class="container-fluid">
-        <div class="jumbtron">
-            <h1> Create A New Blog</h1>
+        <div class="jumbotron">
+            <h1> Edit </h1>
         </div>
         <div class="col-md-12">
-        <form action="{{route('blogs.update',[$blog->id])}}" method="POST">
+        <form action="{{route('blogs.update',[$blog->id])}}" method="POST" enctype="multipart/form-data">
             {{method_field('patch')}}
                 <div class="form-group">
                     <label for="tilte"></label>
@@ -28,6 +29,12 @@
                     <input type="checkbox" value="{{ $category->id }}" name="category_id[]" class="form-check-input">
                     <label for="" class="form-check-label margin-left">{{$category->name}}</label>
                     @endforeach
+                </div>
+                <div class=form-group>
+                    <label class="btn btn-default">
+                    <span class="btn btn-outline btn-sm btn-info">Featured Image</span>
+                    <input type="file" name="featured_image" class="form-control" hidden>
+                </label>
                 </div>
                 <div>
                     <button class="btn btn-primary" type="submit">Update blog</button>

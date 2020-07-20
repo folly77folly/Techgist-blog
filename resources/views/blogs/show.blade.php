@@ -1,7 +1,23 @@
 @extends('layouts.app')
+{{-- @if ($blog->title)
+
+@else
+@include('partials.meta_static')  
+@endif --}}
+@include('partials.meta_dynamic')
+{{-- @section('meta_title'){{$blog->meta_title}}
+@endsection
+@section('meta_description'){{$blog->meta_description}}
+@endsection --}}
 @section('content')
     <div class="container-fluid">
         <div class="jumbotron">
+            <div class="col-md-12">
+                @if ($blog->featured_image)
+                <img src="/images/featured_images/{{$blog->featured_image? $blog->featured_image: '' }}" 
+                alt="{{ Str::limit($blog->title, 10, '...') }}" class="img-responsive featured_image">
+                @endif
+            </div>
         <div class="col-md-12">
             <h1>{{ $blog->title }}</h1>
         </div>
@@ -17,7 +33,10 @@
         </div>
         </div>
         <div class="col-md-12">
-        <p>{{ $blog->body }}</p>
+        {!! $blog->body !!}
+        @if ($blog->user)
+        Author : <a href="{{route('users.show',$blog->user->name)}}">{{$blog->user->name}}</a> | Posted : {{$blog->created_at->diffForHumans()}}
+        @endif
         <hr>
         <strong>Categories:</strong>
         @foreach($blog->category as $category)

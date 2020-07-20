@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use App\Blog;
 use App\Category;
+use Session;
 
 
 class BlogsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('author',['only'=>['create','store','edit','update']]);
+        $this->middleware('admin',['only'=>['delete','trash','restore','permanentDelete']]);
+    }
+    
     //
     public function index(){
-        $blogs = Blog::latest()->get();
+        // $blogs = Blog::latest()->get();
+        $blogs = Blog::where('status', 1)->latest()->get();
         return view('blogs.index', compact('blogs'));
     }
 
@@ -22,21 +30,48 @@ class BlogsController extends Controller
     }
 
     public function store(Request $request){
+        //rules
+        $rules = [
+            'title' => 'required|min:5|max:160',
+            'body' => 'required|min:20|',            
+        ];
+
+        $this->validate($request, $rules);
+
         $input = $request->all();
-        $blog = Blog::create($input);
+        //image upload
+        if ($file = $request->file('featured_image')) {
+            $name = uniqid() . ($file->getClientOriginalName());
+            $name = strtolower(Str_replace(' ','-',$name));
+            $file->move('images/featured_images/', $name);
+            $input['featured_image'] = $name;
+        }
+        //meta stuffs
+        $input['slug']= Str::slug($request['title']);
+        $input['meta_title']= Str::limit($request['title'], 50);
+        $input['meta_description']= Str::limit($request['title'], 100,'...');
+        // Blog instance
+        // $blog = Blog::create($input);
+
+        //user instance
+        $blogByUser = $request->user()->blogs()->create($input);
+
         // $newBlog = new Blog();
         // $newBlog->title = $request->title;
         // $newBlog->body = $request->body;
         // $newBlog->save();
         //sync with categories
         if ($request->category_id) {
-            $blog->category()->sync($request->category_id);
+            $blogByUser->category()->sync($request->category_id);
         }
+        $request->session()->flash('blog_created_message', 'A New Blog Created Successfully');
+        // Session::flash('blog_created_message', 'A New Blog Created Successfully');
         return redirect('/blogs');
     }
 
-    public function show($id){
-        $blog = Blog::findOrFail($id);
+    public function show($slug){
+        // $blog = Blog::findOrFail($id);
+        $blog = Blog::where('slug',$slug)->first();
         return view('/blogs.show', compact('blog'));
     }
 
@@ -52,8 +87,19 @@ class BlogsController extends Controller
     }
 
     public function update(Request $request, $id){
+
         $input = $request->all();
         $blog = Blog::findOrFail($id);
+        //image upload
+        if ($file = $request->file('featured_image')) {
+            if($blog->featured_image){
+                unlink('images/featured_images/'.$blog->featured_image);
+            }
+            $name = uniqid() . ($file->getClientOriginalName());
+            $name = strtolower(Str_replace(' ','-',$name));
+            $file->move('images/featured_images/', $name);
+            $input['featured_image'] = $name;
+        }
         $blog->update($input);
         //sync with categories
         if ($request->category_id) {
