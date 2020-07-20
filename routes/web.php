@@ -39,7 +39,7 @@ Route::delete('/blogs/{id}/delete', 'BlogsController@delete')->name('blogs.delet
 Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
 Route::get('/admin/blogs', 'AdminController@blogs')->name('admin.blogs');
 
-// roue resource
+// route resource
 Route::resource('categories', 'CategoryController');
 Route::resource('users', 'UserController');
 
@@ -47,3 +47,6 @@ Route::resource('users', 'UserController');
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+Route::get('/contact', 'MailController@index')->name('mails');
+Route::get('/contact.send', 'MailController@index')->name('mails');
