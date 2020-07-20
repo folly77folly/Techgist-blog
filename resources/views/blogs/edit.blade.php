@@ -3,7 +3,7 @@
 @include('partials.tinymce')
     <div class="container-fluid">
         <div class="jumbotron">
-            <h1> Edit </h1>
+        <h1> Edit | {{$blog->title}}</h1>
         </div>
         <div class="col-md-12">
         <form action="{{route('blogs.update',[$blog->id])}}" method="POST" enctype="multipart/form-data">
