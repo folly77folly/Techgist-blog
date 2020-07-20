@@ -2,10 +2,12 @@
 @section('content')
 @include('partials.tinymce')
     <div class="container-fluid">
-        <div class="jumbtron">
+        <div class="jumbotron">
             <h1> Create A New Blog</h1>
         </div>
         <div class="col-md-12">
+
+            @include('partials.error-message')
             <form action="{{route('blogs.store')}}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="tilte"></label>
@@ -22,8 +24,10 @@
                     @endforeach
                 </div>
                 <div class=form-group>
-                    <label for="featured_image">Featured Image</label>
-                    <input type="file" name="featured_image" class="form-control">
+                        <label class="btn btn-default">
+                        <span class="btn btn-outline btn-sm btn-info">Featured Image</span>
+                        <input type="file" name="featured_image" class="form-control" hidden>
+                    </label>
                 </div>
                 <div>
                     <button class="btn btn-primary" type="submit">Create a new blog</button>

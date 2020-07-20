@@ -15,14 +15,17 @@
         <button class="btn btn-primary margin-left">
         <a class ="text-white" href="{{route('blogs.create')}}">Create blog</a>
         </button>
-        <button class="btn btn-primary margin-left">
+        <button class="btn btn-success margin-left">
             <a class ="text-white" href="{{route('admin.blogs')}}">Publish blog</a>
             </button>
         <button class="btn btn-danger margin-left">
             <a class ="text-white" href="{{route('blogs.trash')}}">Trashed blog</a>
         </button>
-        <button class="btn btn-success margin-left">
+        <button class="btn btn-info margin-left">
             <a class ="text-white" href="{{route('categories.create')}}">Create Category</a>
+        </button>
+        <button class="btn btn-warning margin-left">
+            <a class ="text-white" href="{{route('users.index')}}">Manage Users </a>
         </button>
     </div>
     @endif

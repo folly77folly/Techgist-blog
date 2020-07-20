@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Blog;
 use App\Category;
+use Session;
 
 
 class BlogsController extends Controller
@@ -29,10 +30,19 @@ class BlogsController extends Controller
     }
 
     public function store(Request $request){
+        //rules
+        $rules = [
+            'title' => 'required|min:5|max:160',
+            'body' => 'required|min:20|',            
+        ];
+
+        $this->validate($request, $rules);
+
         $input = $request->all();
         //image upload
         if ($file = $request->file('featured_image')) {
             $name = uniqid() . ($file->getClientOriginalName());
+            $name = strtolower(Str_replace(' ','-',$name));
             $file->move('images/featured_images/', $name);
             $input['featured_image'] = $name;
         }
@@ -54,6 +64,8 @@ class BlogsController extends Controller
         if ($request->category_id) {
             $blogByUser->category()->sync($request->category_id);
         }
+        $request->session()->flash('blog_created_message', 'A New Blog Created Successfully');
+        // Session::flash('blog_created_message', 'A New Blog Created Successfully');
         return redirect('/blogs');
     }
 
@@ -78,6 +90,16 @@ class BlogsController extends Controller
 
         $input = $request->all();
         $blog = Blog::findOrFail($id);
+        //image upload
+        if ($file = $request->file('featured_image')) {
+            if($blog->featured_image){
+                unlink('images/featured_images/'.$blog->featured_image);
+            }
+            $name = uniqid() . ($file->getClientOriginalName());
+            $name = strtolower(Str_replace(' ','-',$name));
+            $file->move('images/featured_images/', $name);
+            $input['featured_image'] = $name;
+        }
         $blog->update($input);
         //sync with categories
         if ($request->category_id) {
