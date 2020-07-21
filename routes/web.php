@@ -48,5 +48,5 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::get('/contact', 'MailController@index')->name('mails');
-Route::get('/contact.send', 'MailController@index')->name('mails');
+Route::get('/contact', 'MailController@contact')->name('contact');
+Route::post('/conatct/send', 'MailController@send')->name('mail.send');
