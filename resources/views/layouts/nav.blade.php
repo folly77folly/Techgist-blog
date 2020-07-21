@@ -13,7 +13,7 @@
             <li> <a href="{{route('blogs')}}" class="nav-link">Blogs <span class="badge bg-dark text-white">{{$blogs->count()}}</span></a> </li>           
 
             <li> <a href="{{route('categories.index')}}" class="nav-link">Category</a> </li>
-
+            <li> <a href="{{route('contact')}}" class="nav-link">Contact Us</a> </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

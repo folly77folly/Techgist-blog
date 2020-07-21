@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use App\Blog;
+use App\User;
 use App\Category;
 use Session;
+use App\Mail\BlogPublished;
 
 
 class BlogsController extends Controller
@@ -64,6 +67,12 @@ class BlogsController extends Controller
         if ($request->category_id) {
             $blogByUser->category()->sync($request->category_id);
         }
+        //mail 
+        $users = User::all();
+        foreach ($users as $user) {
+            Mail::to($user->email)->queue(new BlogPublished($blogByUser, $user));
+        }
+
         $request->session()->flash('blog_created_message', 'A New Blog Created Successfully');
         // Session::flash('blog_created_message', 'A New Blog Created Successfully');
         return redirect('/blogs');

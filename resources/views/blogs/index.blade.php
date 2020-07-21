@@ -8,6 +8,12 @@
             <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
         </div>
     @endif
+    @if (Session::has('mail_sent_message'))
+    <div class="alert alert-success">
+        {{Session::get('mail_sent_message')}}
+        <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+    </div>
+@endif
     @foreach ($blogs as $blog)
     <div class="col-md-8 offset-md-2 text-center">
         <h2> <a href=" {{route('blogs.show', [$blog->slug]) }} ">{{ $blog->title }}</a></h2>
