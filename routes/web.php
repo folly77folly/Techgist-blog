@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'BlogsController@index')->name('home');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+// Route::get('/', 'BlogsController@index')->name('home');
 
 // Route::get('/home', function(){
 //     return view('home');
