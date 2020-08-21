@@ -62,7 +62,7 @@
                         </div>
                         <div class="form-group row">
                             {{-- <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}"> --}}
-                                <label class="col-md-4 control-label">Captcha</label>
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Captcha') }}</label>
                         
                                     <div class="col-md-6">
                                         {!! captcha_image_html('ContactCaptcha') !!}

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Blog;
+use App\StaticCollections\Status;
+
 class AdminController extends Controller
 {
     //
@@ -15,8 +17,8 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
     public function blogs(){
-        $publishedBlogs = Blog::where('status', 1)->latest()->get();
-        $draftBlogs = Blog::where('status', 0)->latest()->get();
+        $publishedBlogs = Blog::where('status', Status::$PUBLISHED)->latest()->get();
+        $draftBlogs = Blog::where('status', Status::$DRAFT)->latest()->get();
         return view('admin.blogs', compact('publishedBlogs','draftBlogs'));
     }
 }
