@@ -25,6 +25,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('/blogs', 'BlogsController@index')->name('blogs');
 Route::get('/blogs/create', 'BlogsController@create')->name('blogs.create');
 Route::post('/blogs/store', 'BlogsController@store')->name('blogs.store');
+
 //trashed routes
 Route::get('/blogs/trash', 'BlogsController@trash')->name('blogs.trash');
 Route::get('/blogs/trash/{id}/restore', 'BlogsController@restore')->name('blogs.restore');
@@ -50,4 +51,4 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 Route::get('/contact', 'MailController@contact')->name('contact');
-Route::post('/conatct/send', 'MailController@send')->name('mail.send');
+Route::post('/contact/send', 'MailController@send')->name('mail.send');

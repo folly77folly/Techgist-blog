@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\StaticCollections\Role;
 
 class AdminMiddleware
 {
@@ -16,7 +17,7 @@ class AdminMiddleware
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if($user->role->id === 1){
+        if($user->role->id === Role::$ADMIN){
             return $next($request);
         }else{
             return redirect('/');
