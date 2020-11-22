@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+// Route::get('/dashboard', 'Auth/LoginController@showLoginForm')->name('home');
 
 Auth::routes();
 

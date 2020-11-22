@@ -31,7 +31,8 @@ class RegisterController extends Controller
      * @var string
      */
     // protected $redirectTo = RouteServiceProvider::HOME;
-    protected $redirectTo = '/';
+    protected $redirectTo = RouteServiceProvider::DASHBOARD;
+    // protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -74,5 +75,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role_id'=> Role::$ADMIN,
         ]);
+
+        // return view('admin/dashboard');
     }
 }
