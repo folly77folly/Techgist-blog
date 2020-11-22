@@ -13,31 +13,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'BlogsController@index')->name('home');
+Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+// Route::get('/dashboard', 'Auth/LoginController@showLoginForm')->name('home');
 
-// Route::get('/home', function(){
-//     return view('home');
-// });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
-Route::get('/blogs', 'BlogsController@index')->name('blogs');
-Route::get('/blogs/create', 'BlogsController@create')->name('blogs.create');
-Route::post('/blogs/store', 'BlogsController@store')->name('blogs.store');
-//trashed routes
-Route::get('/blogs/trash', 'BlogsController@trash')->name('blogs.trash');
-Route::get('/blogs/trash/{id}/restore', 'BlogsController@restore')->name('blogs.restore');
-Route::delete('/blogs/trash/{id}/permanent-delete', 'BlogsController@permanentDelete')->name('blogs.permanent-delete');
+Route::prefix('blogs')->group(function(){
+    Route::get('', 'BlogsController@index')->name('blogs');
+    Route::get('create', 'BlogsController@create')->name('blogs.create');
+    Route::post('store', 'BlogsController@store')->name('blogs.store');
 
+    //trashed routes
+    Route::prefix('trash')->group(function(){
+        Route::get('', 'BlogsController@trash')->name('blogs.trash');
+        Route::get('{id}/restore', 'BlogsController@restore')->name('blogs.restore');
+        Route::delete('{id}/permanent-delete', 'BlogsController@permanentDelete')->name('blogs.permanent-delete');
+    });
 
-Route::get('/blogs/{id}', 'BlogsController@show')->name('blogs.show');
-Route::get('/blogs/{id}/edit', 'BlogsController@edit')->name('blogs.edit');
-Route::patch('/blogs/{id}/update', 'BlogsController@update')->name('blogs.update');
-Route::delete('/blogs/{id}/delete', 'BlogsController@delete')->name('blogs.delete');
+    Route::prefix('{id}')->group(function(){
+        Route::get('', 'BlogsController@show')->name('blogs.show');
+        Route::get('edit', 'BlogsController@edit')->name('blogs.edit');
+        Route::patch('update', 'BlogsController@update')->name('blogs.update');
+        Route::delete('delete', 'BlogsController@delete')->name('blogs.delete');
+    });
+});
+
 
 //Admin Routes
-Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
-Route::get('/admin/blogs', 'AdminController@blogs')->name('admin.blogs');
+Route::prefix('admin')->group(function(){
+    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('blogs', 'AdminController@blogs')->name('admin.blogs');
+});
 
 // route resource
 Route::resource('categories', 'CategoryController');
@@ -48,5 +54,8 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::get('/contact', 'MailController@contact')->name('contact');
-Route::post('/conatct/send', 'MailController@send')->name('mail.send');
+//contact routes
+Route::prefix('contact')->group(function(){
+    Route::get('', 'MailController@contact')->name('contact');
+    Route::post('send', 'MailController@send')->name('mail.send');
+});

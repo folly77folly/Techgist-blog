@@ -10,12 +10,12 @@
             @include('partials.error-message')
             <form action="{{route('blogs.store')}}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="tilte"></label>
+                    <label for="tilte">Title</label>
                     <input type="text" name="title" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="body"></label>
-                    <textarea name="body" class="form-control"></textarea>
+                    <textarea name="body" class="form-control">Post</textarea>
                 </div>
                 <div class="form-group form-check form-check-inline">
                     @foreach($categories as $category)

@@ -22,8 +22,7 @@ class BlogsController extends Controller
     
     //
     public function index(){
-        // $blogs = Blog::latest()->get();
-        $blogs = Blog::where('status', 1)->latest()->get();
+        $blogs = Blog::latest()->get();
         return view('blogs.index', compact('blogs'));
     }
 
@@ -59,10 +58,8 @@ class BlogsController extends Controller
         //user instance
         $blogByUser = $request->user()->blogs()->create($input);
 
-        // $newBlog = new Blog();
-        // $newBlog->title = $request->title;
-        // $newBlog->body = $request->body;
-        // $newBlog->save();
+
+
         //sync with categories
         if ($request->category_id) {
             $blogByUser->category()->sync($request->category_id);
